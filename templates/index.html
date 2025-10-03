@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Style Detector</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <h1> Test Your Style</h1>
+        <p>This system identifies behavioral patterns in your typing. The model is trained to recognize: <b>{{ ', '.join(known_styles) }}</b>.</p>
+        
+        <div class="section">
+            <h2>Live Style Prediction</h2>
+            <p>Type "<b id="target-word-live">{{ live_target_word }}</b>" to identify your typing pattern.</p>
+            <input type="text" id="live-input" placeholder="Start typing here..." autocomplete="off">
+            <div id="live-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>Submit New Training Data</h2>
+            <p>Help improve the model by submitting a sample of your own typing style.</p>
+            <select id="style-select">
+                <option value="" disabled selected>-- Select your typing style --</option>
+                {% for style in known_styles %}
+                <option value="{{ style }}">{{ style.replace('_', ' ').title() }}</option>
+                {% endfor %}
+            </select>
+            <p>Please type the word "<b id="target-word-submit">{{ submit_target_word }}</b>" to record your sample.</p>
+            <input type="text" id="submit-input" placeholder="Type the word above to record...">
+            <button id="submit-btn" onclick="submitTypingData()">Submit Sample</button>
+            <div id="submit-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+
